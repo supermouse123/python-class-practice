@@ -1,3 +1,7 @@
+# @Time    : 2020/12/16
+# @Author  : sunyingqiang
+# @Email   : 344670075@qq.com
+
 from array import array
 import reprlib
 import math
@@ -131,7 +135,7 @@ class Vector:
 
 
 v = Vector([3, 4, 5, 6])
-
+print(v)
 # for i in v:
 #     print(i)
 # print(bytes(v))
