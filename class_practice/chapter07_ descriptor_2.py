@@ -1,8 +1,9 @@
 # @Time    : 2021/1/11
 # @Author  : sunyingqiang
 # @Email   : 344670075@qq.com
-
-
+"""
+类装饰器的缺点：只对直接依附类有效。被装饰的类的子类不能继承装饰器修改的内容
+"""
 import abc
 
 
@@ -58,6 +59,15 @@ class NonBlank(Validated):
         return value
 
 
+def entity(cls):
+    """类装饰器：改变storage_name的名称"""
+    for key, attr in cls.__dict__.items():
+        if isinstance(attr, Validated):
+            type_name = type(attr).__name__
+            attr.storage_name = '_{}#{}'.format(type_name, key)
+    return cls
+
+@entity
 class LineItem:
     description = NonBlank()  #用来验证description字段不能为空
     weight = Quantity()       #用来验证字段不能为负数
@@ -70,3 +80,8 @@ class LineItem:
 
     def subtotal(self):
         return self.weight * self.price
+
+
+raisins = LineItem('Golden raisins', 10, 6.95)
+print(LineItem.description.storage_name)
+print(raisins.description)
